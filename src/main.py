@@ -39,6 +39,7 @@ def random_commit():
     os.system(f'git commit -m "{commit_message}"')
     os.system("git push")
     print(f"Committed: {commit_message} at {datetime.now()}")
+    print("\n**************************************************\n")
 
 def schedule_commits():
     num_commits = random.randint(2, 3)  # Randomly choose 2 or 3 commits
