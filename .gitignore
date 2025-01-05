@@ -1,8 +1,29 @@
-# Created by venv; see https://docs.python.org/3/library/venv.html
 # Ignore virtual environment directories
 venv/
+env/
+*.venv/
+
+# Ignore Python bytecode
 *.pyc
+*.pyo
 __pycache__/
 
-# Ignore virtual environment-specific files
+# Ignore virtual environment configuration files
 pyvenv.cfg
+
+# Ignore distribution files
+*.egg
+*.egg-info/
+dist/
+build/
+*.tar.gz
+*.zip
+
+# Ignore IDE and editor files
+.vscode/
+.idea/
+*.swp
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
