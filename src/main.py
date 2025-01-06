@@ -2,9 +2,8 @@ import os
 import random
 import time
 import schedule
-from datetime import datetime
+from datetime import datetime, timedelta
 
-# List of repository paths
 REPO_PATHS = [
     os.path.expanduser("~/Desktop/next_js_projects/ezylearn/"),
     os.path.expanduser("~/Desktop/next_js_projects/printouts/"),
@@ -12,7 +11,6 @@ REPO_PATHS = [
     os.path.expanduser("~/Desktop/next_js_projects/nhce-clubs/"),
 ]
 
-# List of commit messages
 COMMIT_MESSAGES = [
     "Refactor code",
     "Update Readme",
@@ -46,8 +44,8 @@ def schedule_commits():
     print(f"\nDate: {datetime.now().strftime('%Y-%m-%d')}")
     print(f"Scheduling {num_commits} commits for today:\n")
 
-    hours = random.sample(range(9, 23), num_commits)  # Random times between 9 AM and 11 PM
-    schedule_times = []  # To store the scheduled times
+    hours = random.sample(range(9, 23), num_commits)
+    schedule_times = []  
 
     for hour in hours:
         minute = random.randint(0, 59)
@@ -55,16 +53,19 @@ def schedule_commits():
         schedule_times.append(commit_time)
         schedule.every().day.at(commit_time).do(random_commit)
 
-    # Print the schedule
     for commit_time in sorted(schedule_times):
         print(f"- Commit scheduled at {commit_time}")
     print("\n")
 
-# Schedule commits for the day
-schedule_commits()
-
-# Run the scheduler
 while True:
-    schedule.run_pending()
-    time.sleep(30)
+    today = datetime.now().date()
+    schedule_commits()  
 
+    next_day = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
+    time_until_next_day = (next_day - datetime.now()).total_seconds()
+    print(f"Waiting {time_until_next_day / 3600:.2f} hours for the next day's schedule...\n")
+
+    while time_until_next_day > 0:
+        schedule.run_pending()
+        time.sleep(30)
+        time_until_next_day -= 30
